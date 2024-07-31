@@ -17,7 +17,7 @@ export const goods = [
 ];
 
 export const App = () => {
-  const [selectedGood, setSelectedGood] = useState(null);
+  const [selectedGood, setSelectedGood] = useState('Jam');
 
   function buttonSwitch(good) {
     setSelectedGood(prev => (prev === good ? null : good));
@@ -46,7 +46,6 @@ export const App = () => {
       <table className="table">
         <tbody>
           {goods.map(good => {
-            // Determine which button to display
             let button;
 
             if (isAnyGoodSelected && selectedGood === good) {
