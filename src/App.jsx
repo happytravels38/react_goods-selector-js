@@ -1,5 +1,7 @@
 import 'bulma/css/bulma.css';
 import './App.scss';
+import { useState } from 'react';
+import cn from 'classnames';
 
 export const goods = [
   'Dumplings',
@@ -14,6 +16,85 @@ export const goods = [
   'Garlic',
 ];
 
+export const App = () => {
+  const [selectedGood, setSelectedGood] = useState(null);
+
+  function buttonSwitch(good) {
+    setSelectedGood(prev => (prev === good ? null : good));
+  }
+
+  function clearButton() {
+    setSelectedGood(null);
+  }
+
+  const isAnyGoodSelected = selectedGood !== null;
+
+  return (
+    <main className="section container">
+      <h1 className="title is-flex is-align-items-center">
+        {selectedGood ? `${selectedGood} is selected` : 'No goods selected'}
+
+        {selectedGood && (
+          <button
+            data-cy="ClearButton"
+            type="button"
+            className="delete ml-3"
+            onClick={clearButton}
+          />
+        )}
+      </h1>
+      <table className="table">
+        <tbody>
+          {goods.map(good => {
+            // Determine which button to display
+            let button;
+
+            if (isAnyGoodSelected && selectedGood === good) {
+              button = (
+                <button
+                  data-cy="RemoveButton"
+                  type="button"
+                  className="button is-info"
+                  onClick={() => buttonSwitch(good)}
+                >
+                  -
+                </button>
+              );
+            } else if (!isAnyGoodSelected) {
+              button = (
+                <button
+                  data-cy="AddButton"
+                  type="button"
+                  className="button"
+                  onClick={() => buttonSwitch(good)}
+                >
+                  +
+                </button>
+              );
+            }
+
+            return (
+              <tr
+                key={good}
+                data-cy="Good"
+                className={cn({
+                  'has-background-success-light': selectedGood === good,
+                })}
+              >
+                <td>{button}</td>
+                <td data-cy="GoodTitle" className="is-vcentered">
+                  {good}
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </main>
+  );
+};
+
+/*
 export const App = () => (
   <main className="section container">
     <h1 className="title is-flex is-align-items-center">No goods selected</h1>
@@ -68,3 +149,4 @@ export const App = () => (
     </table>
   </main>
 );
+*/
