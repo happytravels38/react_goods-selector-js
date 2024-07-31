@@ -27,8 +27,6 @@ export const App = () => {
     setSelectedGood(null);
   }
 
-  const isAnyGoodSelected = selectedGood !== null;
-
   return (
     <main className="section container">
       <h1 className="title is-flex is-align-items-center">
@@ -45,48 +43,42 @@ export const App = () => {
       </h1>
       <table className="table">
         <tbody>
-          {goods.map(good => {
-            let button;
-
-            if (isAnyGoodSelected && selectedGood === good) {
-              button = (
-                <button
-                  data-cy="RemoveButton"
-                  type="button"
-                  className="button is-info"
-                  onClick={() => buttonSwitch(good)}
-                >
-                  -
-                </button>
-              );
-            } else if (!isAnyGoodSelected) {
-              button = (
-                <button
-                  data-cy="AddButton"
-                  type="button"
-                  className="button"
-                  onClick={() => buttonSwitch(good)}
-                >
-                  +
-                </button>
-              );
-            }
-
-            return (
-              <tr
-                key={good}
-                data-cy="Good"
-                className={cn({
-                  'has-background-success-light': selectedGood === good,
-                })}
-              >
-                <td>{button}</td>
-                <td data-cy="GoodTitle" className="is-vcentered">
-                  {good}
-                </td>
-              </tr>
-            );
-          })}
+          {goods.map(good => (
+            <tr
+              key={good}
+              data-cy="Good"
+              className={cn({
+                'has-background-success-light': selectedGood === good,
+              })}
+            >
+              <td>
+                {selectedGood === good ? (
+                  <button
+                    data-cy="RemoveButton"
+                    type="button"
+                    className="button is-info"
+                    onClick={() => buttonSwitch(good)}
+                  >
+                    -
+                  </button>
+                ) : (
+                  !selectedGood && (
+                    <button
+                      data-cy="AddButton"
+                      type="button"
+                      className="button"
+                      onClick={() => buttonSwitch(good)}
+                    >
+                      +
+                    </button>
+                  )
+                )}
+              </td>
+              <td data-cy="GoodTitle" className="is-vcentered">
+                {good}
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </main>
