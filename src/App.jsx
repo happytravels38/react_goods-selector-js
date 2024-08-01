@@ -62,16 +62,14 @@ export const App = () => {
                     -
                   </button>
                 ) : (
-                  !selectedGood && (
-                    <button
-                      data-cy="AddButton"
-                      type="button"
-                      className="button"
-                      onClick={() => buttonSwitch(good)}
-                    >
-                      +
-                    </button>
-                  )
+                  <button
+                    data-cy="AddButton"
+                    type="button"
+                    className="button"
+                    onClick={() => buttonSwitch(good)}
+                  >
+                    +
+                  </button>
                 )}
               </td>
               <td data-cy="GoodTitle" className="is-vcentered">
